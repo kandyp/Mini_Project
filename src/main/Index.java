@@ -7,22 +7,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/Index")
-public class Index extends HttpServlet {
+/**
+ * Servlet implementation class index
+ */
+@WebServlet("/index")
+public class index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public Index() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public index() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

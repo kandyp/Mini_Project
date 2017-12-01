@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author ezpanka
- *
- */
-package main;

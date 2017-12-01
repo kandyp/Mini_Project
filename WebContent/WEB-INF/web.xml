@@ -5,6 +5,7 @@
 	version="3.0">
 	<display-name>Mini_Project</display-name>
 	<welcome-file-list>
+		<welcome-file>index</welcome-file>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
@@ -12,9 +13,6 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	<servlet>
-		<servlet-name>DbInitCall</servlet-name>
-		<servlet-class>init.DbInitCall</servlet-class>
-		<load-on-startup>0</load-on-startup>
-	</servlet>
+	
+	
 </web-app>

@@ -15,64 +15,67 @@ import javax.servlet.http.HttpSession;
 
 import init.DbConnect;
 
-
 @WebServlet("/login")
 public class login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public login() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public login() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		response.setContentType("text/html");  
-        PrintWriter out=response.getWriter();  
-          
-        String email = request.getParameter("email");  
-        String password = request.getParameter("password");  
-        ResultSet rs = null;
-    	Connection connection = null;
-    	Statement s = null;
-    	
-    	try {
-    		connection = DbConnect.getConnection();
-    		s = connection.createStatement();
-			s.executeQuery("use "+DbConnect.dbName+";");
-			rs = s.executeQuery("select * from users where EMAIL = '"+email+"'");
-			if (!rs.next()) { 
-				out.println("<font color=red>Email Id not available</font>");
-	        	getServletContext().getRequestDispatcher("/home.html").include(request, response);
-	        
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		if (request.getSession(false) == null) {
+
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			ResultSet rs = null;
+			Connection connection = null;
+			Statement s = null;
+
+			try {
+				connection = DbConnect.getConnection();
+				s = connection.createStatement();
+				s.executeQuery("use " + DbConnect.dbName + ";");
+				rs = s.executeQuery("select * from users where EMAIL = '" + email + "'");
+				if (!rs.next()) {
+					out.println("<font color=red>Email Id not available</font>");
+					getServletContext().getRequestDispatcher("/home.html").include(request, response);
+
+				} else {
+					if (password.equals(rs.getString("PASS"))) {
+
+						HttpSession session = request.getSession(true);
+						session.setAttribute("uid", rs.getInt("UID"));
+						session.setAttribute("name", rs.getString("NAME"));
+						session.setAttribute("email", rs.getString("EMAIL"));
+						session.setAttribute("log", true);
+						getServletContext().getRequestDispatcher("/reception").forward(request, response);
+						System.out.println("Login:user logged in " + rs.getInt("UID"));
+
+					} else {
+						out.println("<font color=red>Password is incorrect</font>");
+						getServletContext().getRequestDispatcher("/home.html").include(request, response);
+					}
+
+				}
+
+				out.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			else {
-				if(password.equals(rs.getString("PASS"))){  
-			       
-			        HttpSession session=request.getSession(true);  
-			        session.setAttribute("uid",rs.getInt("UID"));
-			        session.setAttribute("name", rs.getString("NAME"));
-		        	getServletContext().getRequestDispatcher("/reception").forward(request, response);
-		        	System.out.println("user logged in "+rs.getInt("UID"));
-			        
-			        }  
-			        else{
-			        	out.println("<font color=red>Password is incorrect</font>");
-			        	getServletContext().getRequestDispatcher("/home.html").include(request, response);
-			        }  
-				
-			}
-    		
-    	}
-    	catch(Exception e) {
-    		e.printStackTrace();
-    	}
-        
-        
-        out.close();  
-		
+
+		} else {
+			if(request.getSession(false) != null) 
+				getServletContext().getRequestDispatcher("/reception").forward(request, response);
+			else 
+				response.sendRedirect(request.getContextPath());		}
+
 	}
 
 }

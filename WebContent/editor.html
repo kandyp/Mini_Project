@@ -1,0 +1,46 @@
+
+<meta charset="utf-8" />
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet" type="text/css">
+<link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet"
+	type="text/css">
+<script src="http://code.gijgo.com/1.6.1/js/gijgo.js"
+	type="text/javascript"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js">
+</script>
+<script>
+function add() {
+	data = document.getElementById("editor").innerHTML;
+	document.getElementById("add_id").setAttribute("value", nid);
+	document.getElementById("add_data").setAttribute("value", data);
+	document.getElementById("add_form").submit();
+}
+
+</script>
+    
+</head>
+<body>
+<form id="add_form" method="post" action="add">
+		<input id="add_id" type="hidden" name="id" />
+		<input id="add_data" type="hidden" name="data" />
+	</form>
+    <div id="editor">
+        
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#editor").editor();
+        });
+    </script>
+<a class="waves-effect waves-light btn" onclick="add(0);">Add as New Entry to Notebook</a>
+<a class="waves-effect waves-light btn" onclick="add();">Edit Old Entry to Notebook</a>
+
+</body>
+</html>

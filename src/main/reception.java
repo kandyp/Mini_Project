@@ -32,18 +32,16 @@ public class reception extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		if (request.getSession(false) == null) {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
 			getServletContext().getRequestDispatcher("/home.html").forward(request, response);
-
-		} else {
+			
+		} else if((boolean)session.getAttribute("log")){
 			
 			ResultSet rs = null;
-			HttpSession session = request.getSession();
 			int uid = (int) session.getAttribute("uid");
 			String name = (String) session.getAttribute("name");
 			String email = (String) session.getAttribute("email");
-			System.out.println(uid+name);
 			Connection conn = DbConnect.getConnection();
 			PrintWriter out = response.getWriter();
 			try {
@@ -61,11 +59,11 @@ public class reception extends HttpServlet {
 				while(rs.next()) {
 				
 				JSONObject jo = new JSONObject();
-				jo.put("id", rs.getInt("ID"));
-				jo.put("data", rs.getString("DATA"));
+				jo.put("id", rs.getInt("N.ID"));
+				jo.put("data", rs.getString("N.DATA"));
 				SimpleDateFormat sdf = new SimpleDateFormat("E HH:mm:ss dd MMM yyyy");
-				jo.put("ct", sdf.format(rs.getTimestamp("CT")));
-				jo.put("mt", sdf.format(rs.getTimestamp("MT")));
+				jo.put("ct", sdf.format(rs.getTimestamp("N.CT")));
+				jo.put("mt", sdf.format(rs.getTimestamp("N.MT")));
 				ja.add(jo);
 				
 				}
@@ -82,6 +80,8 @@ public class reception extends HttpServlet {
 						+ "</script>");
 				s.close();
 				rs.close();
+				RequestDispatcher rd=request.getRequestDispatcher("/reception.html");  
+		        rd.include(request, response);  
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -91,6 +91,9 @@ public class reception extends HttpServlet {
 			}
 			
 
+		}
+		else {
+			response.sendRedirect(request.getContextPath());
 		}
 	}
 

@@ -57,8 +57,10 @@ public class signup extends HttpServlet {
 				
 				rs = s.executeQuery("select * from users where EMAIL = '"+email+"'");
 				HttpSession session=request.getSession(true);  
-		        session.setAttribute("uid",rs.getInt(0));
+		        session.setAttribute("uid",rs.getInt("ID"));
 		        session.setAttribute("name", rs.getString("NAME"));
+		        session.setAttribute("email", rs.getString("EMAIL"));
+		        session.setAttribute("log", true);
 		        System.out.println("User Created");
 		        request.getRequestDispatcher("/reception.html").include(request, response);
 			}

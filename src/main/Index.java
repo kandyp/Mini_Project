@@ -19,7 +19,7 @@ public class index extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(request.getSession(false) != null){
+		if(request.getSession(false) != null ){
 		    getServletContext().getRequestDispatcher("/reception").forward(request, response);
 		    
 		}

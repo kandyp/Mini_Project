@@ -1,50 +1,53 @@
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css"
-	media="screen,projection" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script>
-	function populate(){
-		for(var i=0;i<data.length;i++){
-			var obj=data[i];
+	function populate() {
+		for (var i = 0; i < data.length; i++) {
+			var obj = data[i];
 			var id = obj.id;
 			var name = obj.name;
 			var ct = obj.ct;
 			var mt = obj.mt;
-			var put = '<div class="col s12 m6">'+
-			'<div class="card blue-grey darken-1">'+
-			'<div class="card-content white-text">'+
-			'<span class="card-title">'+name+'</span>'+
-			'<p>Created : '+ct+'</p>'+
-			'<p>Modified : '+mt+'</p>'+
-			'</div>'+
-			'<div class="card-action">'+
-			'<a onclick="edit('+id+',`'+name+'`)" href="#">Edit</a> <a onclick="delete_row('+id+')" href="#">Delete</a>'+
-			'</div>'+
-			'</div>'+	
-			'</div>';
+			var put = '<div class="col s12 m6">'
+					+ '<div class="card blue-grey darken-1">'
+					+ '<div class="card-content white-text">'
+					+ '<span class="card-title">' + name + '</span>'
+					+ '<p>Created : ' + ct + '</p>' + '<p>Last Modified : ' + mt
+					+ '</p>' + '</div>' + '<div class="card-action">'
+					+ '<a onclick="edit(' + id 
+					+ ')" href="#">Edit</a> <a onclick="delete_row(' + id
+					+ ')" href="#">Delete</a>' + '</div>' + '</div>' + '</div>';
 			var newcontent = document.createElement('div');
-		    newcontent.innerHTML = put;
-		    while (newcontent.firstChild) {
-		    	document.getElementById('addrow').appendChild(newcontent.firstChild);
-		    }
+			newcontent.innerHTML = put;
+			while (newcontent.firstChild) {
+				document.getElementById('addrow').appendChild(
+						newcontent.firstChild);
+			}
 		}
 
 	}
+	
+	function delete_row(elem) {
+		document.getElementById("delete_id").setAttribute("value", elem);
+		document.getElementById("delete_form").submit();
+	}
+	function edit(id) {
+		document.getElementById("edit_id").setAttribute("value", id);
+		document.getElementById("edit_form").submit();
+	}
+	
 </script>
 </head>
 <body>
-	<form id="delete_form" method="post" action="Delete">
-	<input id="delete_id" type="hidden" name="id" />
+	<form id="delete_form" method="post" action="delete">
+		<input id="delete_id" type="hidden" name="id" />
 	</form>
-	<form id="edit_form" method="post" action="Edit">
-	<input id="edit_id" type="hidden" name="id" />
-	<input id="edit_name" type="hidden" name="name"/>
+	<form id="edit_form" method="post" action="editor">
+		<input id="edit_id" type="hidden" name="id" /> 
 	</form>
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -56,8 +59,8 @@
 				<a href="#" class="brand-logo center">Jnaapti NoteBook
 					Application</a>
 				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a href="/logout">Logout</a></li>
-					
+					<li><a href="logout">Logout</a></li>
+
 				</ul>
 			</div>
 		</nav>
@@ -68,8 +71,11 @@
 			<li><div class="user-view">
 					<a href="#!user"><img class="circle"
 						src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg"></a>
-					<a href="#!name"><span class="grey-text name">
-					Jnaapti's student</span></a> <a href="#!email"><span class="grey-text email">notmyemail@email.com</span></a>
+					<a href="#!name"><span class="grey-text name"> <script>
+						document.write(username);
+					</script></span></a> <a href="#!email"><span class="grey-text email"><script>
+						document.write(email);
+					</script></span></a>
 				</div></li>
 			<li><a href="https://jnaapti.com/blog/">Goto Home</a></li>
 			<li><a href="https://www.google.co.in">Goto google</a></li>
@@ -80,19 +86,19 @@
 		<div class="col s9">
 
 			<div class="container">
-				<form class="col s12" id="my_form" method="post" action="Add">
+				
 					<div class="row">
-						<div class="input-field col s6" >
-							 <input	id="field_value" name="addname" type="text" class="validate"> 
-							 <label for="icon_prefix">Add Task Here</label>
-							 <div id="input_area">
-							 <a class="btn-floating btn-large waves-effect waves-light red" onclick="document.getElementById('my_form').submit();">
-							 <i class="material-icons">add</i>
-							 </a>
-							 </div>
+						<div class="input-field col s6">
+							
+							<div id="input_area">
+								<a class="btn-floating btn-large waves-effect waves-light red"
+									onclick="edit(0)"> <i
+									class="material-icons">add</i>
+								</a>
+							</div>
 						</div>
 					</div>
-				</form>
+				
 				<div id="addrow" class="row"></div>
 
 			</div>
@@ -131,32 +137,7 @@
 
 
 	<script>
-	
-populate();
-
-function delete_row(elem) {
-	document.getElementById("delete_id").setAttribute("value",elem);
-	document.getElementById("delete_form").submit();
-}
-function edit_row(id){
-	var name = document.getElementById("field_value").value;
-	document.getElementById("edit_id").setAttribute("value",id);
-	document.getElementById("edit_name").setAttribute("value",name);
-	document.getElementById("edit_form").submit();
-}
-function edit(id,prev){
-	put = '<a class="btn-floating btn-large waves-effect waves-light red" onclick="edit_row('+id+')">'+
-	 '<i class="material-icons">create</i>'
-	 '</a>';
-	 icon(put);
-	 document.getElementById("field_value").value=prev;
-	 document.getElementById("field_value").focus();
-	 
-}
-function icon(put){
-	 document.getElementById("input_area").innerHTML=put;
-	 console.log(put);
-}
-</script>
+		populate();
+	</script>
 </body>
 </html>

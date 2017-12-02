@@ -16,7 +16,9 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js">
 </script>
 <script>
-function add() {
+function add(x) {
+	if (x === 0) 
+		nid = 0;
 	data = document.getElementById("editor").innerHTML;
 	document.getElementById("add_id").setAttribute("value", nid);
 	document.getElementById("add_data").setAttribute("value", data);
@@ -41,6 +43,8 @@ function add() {
     </script>
 <a class="waves-effect waves-light btn" onclick="add(0);">Add as New Entry to Notebook</a>
 <a class="waves-effect waves-light btn" onclick="add();">Edit Old Entry to Notebook</a>
-
+<script type="text/javascript">
+document.getElementById("editor").innerHTML = data;
+</script>
 </body>
 </html>

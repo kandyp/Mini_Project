@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import init.DbConnect;
 
@@ -30,7 +28,6 @@ public class editor extends HttpServlet {
     }
 
 	
-	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(false);
@@ -50,14 +47,18 @@ public class editor extends HttpServlet {
 				s.execute("use " + DbConnect.dbName);
 				rs = s.executeQuery("SELECT * FROM NOTES WHERE ID="+nid);
 				request.setCharacterEncoding("utf8");
-				response.setContentType("text/html"); 		
+				response.setContentType("text/html"); 
+				String data = "Edit here";
+				while(rs.next()) {
+					data = rs.getString("DATA");
+				}
 				out.print("<html>\r\n" + 
 						"<head>\r\n" + 
 						"<title>Editor</title>"
 						+ "<script>"
-						+ "var data = "
-						+  rs.getString("DATA")
-						+ ";"
+						+ "var data ='"
+						+  data
+						+ "';"
 						+ "var username = '"+name+"';"
 						+ "var email = '"+email+"';"
 						+ "var nid = "+nid+";"
@@ -70,7 +71,7 @@ public class editor extends HttpServlet {
 			}catch(Exception e) {
 				e.printStackTrace();
 				out.println("<font color=red>Error in Editor</font>");
-	        	getServletContext().getRequestDispatcher("/home.html").include(request, response);
+	        	getServletContext().getRequestDispatcher("/editor.html").forward(request, response);
 				}
 			}
 	}

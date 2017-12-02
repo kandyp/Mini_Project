@@ -72,7 +72,7 @@ public class login extends HttpServlet {
 
 		} else {
 			if(request.getSession(false) != null) 
-				getServletContext().getRequestDispatcher("/reception").forward(request, response);
+				getServletContext().getRequestDispatcher("/reception").include(request, response);
 			else 
 				response.sendRedirect(request.getContextPath());		}
 

@@ -8,8 +8,9 @@
 	function populate() {
 		for (var i = 0; i < data.length; i++) {
 			var obj = data[i];
+			var x = i+1;
 			var id = obj.id;
-			var name = obj.name;
+			var name = "Note "+x;
 			var ct = obj.ct;
 			var mt = obj.mt;
 			var put = '<div class="col s12 m6">'
@@ -32,8 +33,13 @@
 	}
 	
 	function delete_row(elem) {
-		document.getElementById("delete_id").setAttribute("value", elem);
-		document.getElementById("delete_form").submit();
+		
+		if (confirm("You sure wanna delete?") == true) {
+			document.getElementById("delete_id").setAttribute("value", elem);
+			document.getElementById("delete_form").submit();
+	    } 
+		
+		
 	}
 	function edit(id) {
 		document.getElementById("edit_id").setAttribute("value", id);

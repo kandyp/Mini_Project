@@ -36,7 +36,7 @@ public class reception extends HttpServlet {
 		if (session == null) {
 			getServletContext().getRequestDispatcher("/home.html").forward(request, response);
 			
-		} else if((boolean)session.getAttribute("log")){
+		} else {
 			
 			ResultSet rs = null;
 			int uid = (int) session.getAttribute("uid");
@@ -92,9 +92,7 @@ public class reception extends HttpServlet {
 			
 
 		}
-		else {
-			response.sendRedirect(request.getContextPath());
-		}
+		
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

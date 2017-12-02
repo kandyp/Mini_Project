@@ -1,10 +1,121 @@
-<!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <style>
+  	
+ body
+{
+	background: #f5f5f5;
+}
+
+h5
+{
+	font-weight: 400;
+}
+
+.container
+{
+	margin-top: 80px;
+	width: 400px;
+	height: 700px;
+}
+
+.tabs .indicator
+{
+	background-color: #e0f2f1;
+	height: 60px;
+	opacity: 0.3;
+}
+
+.form-container
+{
+	padding: 40px;
+	padding-top: 10px;
+}
+
+.confirmation-tabs-btn
+{
+	position: absolute;
+}
+
+  </style>
+  
 </head>
+
 <body>
-bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+  <div class="section"></div>
+  <main>
+    <center>
+      <img class="responsive-img" src="./img/Untitled1.png" />
+      <div class="section"></div>
+
+      <div class="container white z-depth-2">
+	<ul class="tabs teal">
+		<li class="tab col s3"><a class="white-text active" href="#login">login</a></li>
+		<li class="tab col s3"><a class="white-text" href="#register">register</a></li>
+	</ul>
+	<div id="login" class="col s12">
+		<form class="col s12" action="login" method="post">
+			<div class="form-container">
+				<h3 class="teal-text">Hello</h3>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="email" type="email" class="validate" name="email">
+						<label for="email">Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password" type="password" class="validate" name="password">
+						<label for="password">Password</label>
+					</div>
+				</div>
+				<br>
+				<center>
+					<button class="btn waves-effect waves-light teal" type="submit" name="action">Connect</button>
+				</center>
+			</div>
+		</form>
+	</div>
+	<div id="register" class="col s12">
+		<form class="col s12" action="signup" method="post">
+			<div class="form-container">
+				<h3 class="teal-text">Welcome</h3>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="last_name" type="text" class="validate" name="name">
+						<label for="last_name">Name</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="email" type="email" class="validate" name="email">
+						<label for="email">Email</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password" type="password" class="validate" name="password">
+						<label for="password">Password</label>
+					</div>
+				</div>
+				<center>
+					<button class="btn waves-effect waves-light teal" type="submit" name="action">Submit</button>
+				</center>
+			</div>
+		</form>
+	</div>
+</div>
+
+    <div class="section"></div>
+    <div class="section"></div>
+  </main>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 </body>
+
 </html>

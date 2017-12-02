@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class DbConnect {
 	
-	public static String dbName = "NOTEPAD_KANDARP";
 	public static final String URL = "jdbc:mysql://localhost:3306/";
 	public static final String USER = "root";
 	public static final String PASSWORD = "kandarp";
 	private static DbConnect instance = new DbConnect();
 	public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
+	public static String dbName = "NOTEPAD_KANDARP";
 	
 	private DbConnect() {
 		try {

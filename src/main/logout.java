@@ -25,7 +25,7 @@ public class logout extends HttpServlet {
 		request.getSession().invalidate();
 		request.getSession().setAttribute("log",false);
 		ServletContext context= getServletContext();
-		RequestDispatcher rd= context.getRequestDispatcher("/index");
+		RequestDispatcher rd= context.getRequestDispatcher("/home.html");
 		rd.forward(request, response); 
 	}
 

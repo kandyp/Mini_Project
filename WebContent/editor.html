@@ -25,6 +25,15 @@ function add(x) {
 	document.getElementById("add_form").submit();
 }
 
+function delete_row(elem) {
+	
+	if (confirm("You sure wanna delete?") == true) {
+		document.getElementById("delete_id").setAttribute("value", elem);
+		document.getElementById("delete_form").submit();
+    } 
+}
+	
+
 </script>
     
 </head>
@@ -32,6 +41,9 @@ function add(x) {
 <form id="add_form" method="post" action="add">
 		<input id="add_id" type="hidden" name="id" />
 		<input id="add_data" type="hidden" name="data" />
+	</form>
+	<form id="delete_form" method="post" action="delete">
+		<input id="delete_id" type="hidden" name="id" />
 	</form>
     <div id="editor">
         
@@ -43,6 +55,7 @@ function add(x) {
     </script>
 <a class="waves-effect waves-light btn" onclick="add(0);">Add as New Entry to Notebook</a>
 <a class="waves-effect waves-light btn" onclick="add();">Edit Old Entry to Notebook</a>
+<a class="waves-effect waves-light btn red" onclick="delete_row(nid);">Delete this particular Note</a>
 <script type="text/javascript">
 document.getElementById("editor").innerHTML = data;
 </script>

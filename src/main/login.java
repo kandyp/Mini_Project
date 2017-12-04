@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,7 +53,19 @@ public class login extends HttpServlet {
 			s = connection.createStatement();
 			s.executeQuery("use " + DbConnect.dbName + ";");
 			rs = s.executeQuery("select * from users where EMAIL = '" + email + "'");
-			if (!rs.next()) {
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnsNumber = rsmd.getColumnCount();
+			while (rs.next()) {
+			    for (int i = 1; i <= columnsNumber; i++) {
+			        if (i > 1) System.out.print(",  ");
+			        String columnValue = rs.getString(i);
+			        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+			    }
+			    System.out.println("-------");
+			}
+			
+			
+			/*if (!rs.next()) {
 				out.println("<font color=red>Email Id not available</font>");
 				getServletContext().getRequestDispatcher("/home.html").include(request, response);
 
@@ -61,17 +76,38 @@ public class login extends HttpServlet {
 					response.addCookie(new Cookie("name", rs.getString("NAME")));
 					response.addCookie(new Cookie("email", rs.getString("EMAIL")));
 					System.out.println("Login:user logged in " + rs.getInt("UID"));
+					
+					
+					//test stub----------------
+					System.out.println("in login"+rs.getString("UID")+rs.getString("NAME"));
+					Cookie ckx[] = request.getCookies();
+					Map<String,Object> m = new HashMap<String,Object>();
+					for (int i = 0; i < ckx.length; i++) {
+						String name = ckx[i].getName();
+						Object value = ckx[i].getValue();
+						System.out.println(name+"       "+value);
+						m.put(name, value);
+					}
+					
+					//-------------------------
+					
+					
+					
+					
 					getServletContext().getRequestDispatcher("/reception").forward(request, response);
 				} else {
 					out.println("<font color=red>Password is incorrect</font>");
 					getServletContext().getRequestDispatcher("/home.html").include(request, response);
 				}
 
-			}
+			}*/
 
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			out.println("<font color=red>Error in LOGIN</font>");
+        	getServletContext().getRequestDispatcher("/home.html").forward(request, response);
+			
 		}
 
 	}

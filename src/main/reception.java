@@ -35,27 +35,25 @@ public class reception extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-
-		Cookie ck[] = request.getCookies();
 		
-		if (ck == null)
-			response.sendRedirect("index");
-		else {
+		PrintWriter out = response.getWriter();
+		Cookie ck[] = request.getCookies();
+		Map<String, Object> m = new HashMap<String, Object>();
+		for (int i = 0; i < ck.length; i++) {
+			String name = ck[i].getName();
+			Object value = ck[i].getValue();
+			System.out.println(name + "       " + value);
+			m.put(name, value);
+		}
 
-			Map<String,Object> m = new HashMap<String,Object>();
-			for (int i = 0; i < ck.length; i++) {
-				String name = ck[i].getName();
-				Object value = ck[i].getValue();
-				System.out.println(name+"       "+value);
-				m.put(name, value);
-			}
-			
+		if (m.containsKey("uid")) {
+
 			ResultSet rs = null;
-			int uid = Integer.parseInt( (String) m.get("uid") );
+			int uid = Integer.parseInt((String) m.get("uid"));
 			String name = (String) m.get("name");
 			String email = (String) m.get("email");
 			Connection conn = DbConnect.getConnection();
-			PrintWriter out = response.getWriter();
+
 			try {
 				Statement s = conn.createStatement();
 				s.execute("use " + DbConnect.dbName);
@@ -92,6 +90,9 @@ public class reception extends HttpServlet {
 				getServletContext().getRequestDispatcher("/home.html").include(request, response);
 
 			}
+
+		} else {
+			response.sendRedirect("index");
 
 		}
 

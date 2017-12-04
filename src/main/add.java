@@ -5,10 +5,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,8 +31,16 @@ public class add extends HttpServlet {
 			throws ServletException, IOException {
 
 		int nid = Integer.parseInt(request.getParameter("id"));
-		HttpSession session = request.getSession();
-		int uid = (int) session.getAttribute("uid");
+		Cookie ck[] = request.getCookies();
+		Map<String,Object> m = new HashMap<String,Object>();
+		for (int i = 0; i < ck.length; i++) {
+			String name = ck[i].getName();
+			Object value = ck[i].getValue();
+			System.out.println(name+"       "+value);
+			m.put(name, value);
+		}
+		
+		int uid = Integer.parseInt((String) m.get("uid"));
 		String data = request.getParameter("data");
 
 		if (nid == 0) {

@@ -1,8 +1,12 @@
 package main;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +23,16 @@ public class index extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(request.getSession(false) != null ){
+		Cookie ck[] = request.getCookies();
+		Map<String,Object> m = new HashMap<String,Object>();
+		for (int i = 0; i < ck.length; i++) {
+			String name = ck[i].getName();
+			Object value = ck[i].getValue();
+			System.out.println(name+"       "+value);
+			m.put(name, value);
+		}
+		
+		if(m.containsKey("uid")){
 		    getServletContext().getRequestDispatcher("/reception").forward(request, response);
 		    
 		}

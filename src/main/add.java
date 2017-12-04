@@ -15,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import init.DbConnect;
 
@@ -36,7 +35,6 @@ public class add extends HttpServlet {
 		for (int i = 0; i < ck.length; i++) {
 			String name = ck[i].getName();
 			Object value = ck[i].getValue();
-			System.out.println(name+"       "+value);
 			m.put(name, value);
 		}
 		

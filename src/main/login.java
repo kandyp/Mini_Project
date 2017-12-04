@@ -53,7 +53,7 @@ public class login extends HttpServlet {
 			s = connection.createStatement();
 			s.executeQuery("use " + DbConnect.dbName + ";");
 			rs = s.executeQuery("select * from users where EMAIL = '" + email + "'");
-			ResultSetMetaData rsmd = rs.getMetaData();
+			/*ResultSetMetaData rsmd = rs.getMetaData();
 			int columnsNumber = rsmd.getColumnCount();
 			while (rs.next()) {
 			    for (int i = 1; i <= columnsNumber; i++) {
@@ -63,9 +63,9 @@ public class login extends HttpServlet {
 			    }
 			    System.out.println("-------");
 			}
+			*/
 			
-			
-			/*if (!rs.next()) {
+			if (!rs.next()) {
 				out.println("<font color=red>Email Id not available</font>");
 				getServletContext().getRequestDispatcher("/home.html").include(request, response);
 
@@ -78,30 +78,13 @@ public class login extends HttpServlet {
 					System.out.println("Login:user logged in " + rs.getInt("UID"));
 					
 					
-					//test stub----------------
-					System.out.println("in login"+rs.getString("UID")+rs.getString("NAME"));
-					Cookie ckx[] = request.getCookies();
-					Map<String,Object> m = new HashMap<String,Object>();
-					for (int i = 0; i < ckx.length; i++) {
-						String name = ckx[i].getName();
-						Object value = ckx[i].getValue();
-						System.out.println(name+"       "+value);
-						m.put(name, value);
-					}
-					
-					//-------------------------
-					
-					
-					
-					
-					getServletContext().getRequestDispatcher("/reception").forward(request, response);
+					response.sendRedirect("reception");
 				} else {
 					out.println("<font color=red>Password is incorrect</font>");
 					getServletContext().getRequestDispatcher("/home.html").include(request, response);
 				}
 
-			}*/
-
+			}
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();

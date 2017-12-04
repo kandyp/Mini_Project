@@ -32,20 +32,17 @@ public class editor extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-Cookie ck[] = request.getCookies();
 		
-		if (ck == null)
+		Cookie ck[] = request.getCookies();
+		Map<String,Object> m = new HashMap<String,Object>();
+		for (int i = 0; i < ck.length; i++) {
+			String name = ck[i].getName();
+			Object value = ck[i].getValue();
+			m.put(name, value);
+		}
+		if (!m.containsKey("uid"))
 			response.sendRedirect("index");
 		else {
-
-			Map<String,Object> m = new HashMap<String,Object>();
-			for (int i = 0; i < ck.length; i++) {
-				String name = ck[i].getName();
-				Object value = ck[i].getValue();
-				System.out.println(name+"       "+value);
-				m.put(name, value);
-			}
-			
 			ResultSet rs = null;
 			String name = (String) m.get("name");
 			String email = (String) m.get("email");

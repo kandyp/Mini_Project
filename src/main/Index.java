@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet("/index")
-public class index extends HttpServlet {
+public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  public index() {
+  public Index() {
         super();
        
     }
@@ -28,7 +28,6 @@ public class index extends HttpServlet {
 		for (int i = 0; i < ck.length; i++) {
 			String name = ck[i].getName();
 			Object value = ck[i].getValue();
-			System.out.println(name+"       "+value);
 			m.put(name, value);
 		}
 		

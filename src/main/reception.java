@@ -42,7 +42,6 @@ public class reception extends HttpServlet {
 		for (int i = 0; i < ck.length; i++) {
 			String name = ck[i].getName();
 			Object value = ck[i].getValue();
-			System.out.println(name + "       " + value);
 			m.put(name, value);
 		}
 
@@ -92,6 +91,7 @@ public class reception extends HttpServlet {
 			}
 
 		} else {
+			System.out.println("false login");
 			response.sendRedirect("index");
 
 		}

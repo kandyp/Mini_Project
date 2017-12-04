@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 import javax.servlet.ServletException;
@@ -13,7 +14,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import init.DbConnect;
 
@@ -40,6 +40,16 @@ public class signup extends HttpServlet {
     	Connection connection = null;
     	Statement s = null;
     	
+    	
+    	Cookie[] cookies = request.getCookies();
+	    if (cookies != null)
+	        for (Cookie cookie : cookies) {
+	            cookie.setValue("");
+	            cookie.setPath("/");
+	            cookie.setMaxAge(0);
+	            response.addCookie(cookie);
+	        }
+    	
     	try {
     		connection = DbConnect.getConnection();
     		s = connection.createStatement();
@@ -57,24 +67,31 @@ public class signup extends HttpServlet {
 			else {
 				
 				rs = s.executeQuery("select * from USERS where EMAIL = '"+email+"'");
-				HttpSession session=request.getSession();  
 		        while(rs.next()) {
+		        	
+		        	
+		        
 		        response.addCookie(new Cookie("uid",rs.getString("UID")));
 		        response.addCookie(new Cookie("name",rs.getString("NAME")));
 		        response.addCookie(new Cookie("email",rs.getString("EMAIL")));
 
-				session.setAttribute("uid",rs.getInt("UID"));
-		        session.setAttribute("name", rs.getString("NAME"));
-		        session.setAttribute("email", rs.getString("EMAIL"));
-		        session.setAttribute("log", true);
+				
 		        }
 		        System.out.println("User Created");
-		        request.getRequestDispatcher("/reception.html").include(request, response);
+		        response.sendRedirect("reception");
+
 			}
     		
     	}
+    	
+    	catch(SQLIntegrityConstraintViolationException e) {
+    		out.println("<font color=red>EMAIL already Exists</font>");
+        	getServletContext().getRequestDispatcher("/home.html").forward(request, response);
+			
+    	}
     	catch(Exception e) {
     		e.printStackTrace();
+    		out.println("<font color=red>Error in signup</font>");
     		getServletContext().getRequestDispatcher("/home.html").include(request, response);
     	}
     	

@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,12 +56,18 @@ public class signup extends HttpServlet {
 			}
 			else {
 				
-				rs = s.executeQuery("select * from users where EMAIL = '"+email+"'");
-				HttpSession session=request.getSession(true);  
-		        session.setAttribute("uid",rs.getInt("ID"));
+				rs = s.executeQuery("select * from USERS where EMAIL = '"+email+"'");
+				HttpSession session=request.getSession();  
+		        while(rs.next()) {
+		        response.addCookie(new Cookie("uid",rs.getString("UID")));
+		        response.addCookie(new Cookie("name",rs.getString("NAME")));
+		        response.addCookie(new Cookie("email",rs.getString("EMAIL")));
+
+				session.setAttribute("uid",rs.getInt("UID"));
 		        session.setAttribute("name", rs.getString("NAME"));
 		        session.setAttribute("email", rs.getString("EMAIL"));
 		        session.setAttribute("log", true);
+		        }
 		        System.out.println("User Created");
 		        request.getRequestDispatcher("/reception.html").include(request, response);
 			}
